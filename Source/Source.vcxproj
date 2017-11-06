@@ -26,26 +26,26 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -69,20 +69,49 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir).temp\$(Configuration)\</IntDir>
+    <TargetName>ezimporter_$(PlatformTarget)_d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir).temp\$(Configuration)\</IntDir>
+    <TargetName>ezimporter_$(PlatformTarget)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir).temp\$(Configuration)\</IntDir>
+    <TargetName>ezimporter_$(PlatformTarget)_d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir).temp\$(Configuration)\</IntDir>
+    <TargetName>ezimporter_$(PlatformTarget)</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>Z:\Programmation\Projects\EzImporter\Lib\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>Z:\Programmation\Projects\EzImporter\Lib\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Math_d.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>Z:\Programmation\Projects\EzImporter\Lib\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Lib>
+      <AdditionalLibraryDirectories>Z:\Programmation\Projects\EzImporter\Lib\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Math_d.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -91,11 +120,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>Z:\Programmation\Projects\EzImporter\Lib\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>Z:\Programmation\Projects\EzImporter\Lib\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -104,13 +137,37 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>Z:\Programmation\Projects\EzImporter\Lib\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>Z:\Programmation\Projects\EzImporter\Lib\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Importers\Importer.hpp" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="Mesh\Circulator\IncidentFaceCirculator.hpp" />
+    <ClInclude Include="Mesh\Circulator\VertexCirculator.hpp" />
+    <ClInclude Include="Mesh\Face.hpp" />
+    <ClInclude Include="Mesh\Mesh.hpp" />
+    <ClInclude Include="Importers\OffImporter.hpp" />
+    <ClInclude Include="Mesh\Vertex.hpp" />
+    <ClInclude Include="Postprocessing\Postprocessing.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Importers\Importer.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="Mesh\Circulator\IncidentFaceCirculator.cpp" />
+    <ClCompile Include="Mesh\Circulator\VertexCirculator.cpp" />
+    <ClCompile Include="Mesh\Face.cpp" />
+    <ClCompile Include="Mesh\Mesh.cpp" />
+    <ClCompile Include="Importers\OffImporter.cpp" />
+    <ClCompile Include="Mesh\Vertex.cpp" />
+    <ClCompile Include="Postprocessing\Postprocessing.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
