@@ -11,7 +11,7 @@ Ez::Mesh Ez::Importer::ReadFromFile(const std::string& path, Postprocessing pp)
 
 	const auto format = path.substr(it, path.length());
 	
-	if (format == "off")
+	if (format == ".off")
 	{
 		return OffImporter().ReadFromFile(path, pp);
 	}

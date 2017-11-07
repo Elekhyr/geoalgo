@@ -6,10 +6,12 @@
 #include <vector>
 #include <map>
 #include "../Mesh/Face.hpp"
+#include "../Postprocessing/Triangulation.hpp"
+#include <list>
 
 namespace Ez
 {
-	Mesh OffImporter::ReadFromFile(const std::string& path, Postprocessing pp)
+	Mesh OffImporter::ReadFromFile(const std::string& path, const Postprocessing pp)
 	{
 
 #ifdef _DEBUG
@@ -44,7 +46,9 @@ namespace Ez
 		
 		Mesh result;
 		switch (pp) {
-		case Postprocessing::Naive: break;
+		case Postprocessing::Naive: 
+			result = LoadWithNaiveTriangulation(stream, nb_vertices, nb_faces); 
+			break;
 		case Postprocessing::Delaunay: break;
 		default: result = LoadWithNoPostProcessing(stream, nb_vertices, nb_faces);
 		}
@@ -60,7 +64,7 @@ namespace Ez
 		return std::move(result);
 	}
 
-	Mesh OffImporter::LoadWithNoPostProcessing(std::stringstream& stream, const unsigned nbVertices, const unsigned nbFaces) const
+	Mesh OffImporter::LoadWithNoPostProcessing(std::stringstream& stream, const unsigned nbVertices, const unsigned nbFaces)
 	{
 		// Reading vertices
 		std::vector<Vertex> vertices(nbVertices);
@@ -157,28 +161,53 @@ namespace Ez
 		return std::move(Mesh(std::move(vertices), std::move(faces)));
 	}
 
-	Mesh OffImporter::LoadWithNaiveTriangulation(std::stringstream& stream, const unsigned nbVertices, const unsigned nbFaces) const
+	Mesh OffImporter::LoadWithNaiveTriangulation(std::stringstream& stream, const unsigned nbVertices, const unsigned nbFaces)
 	{
 		// Reading vertices
-		std::vector<Vertex> vertices(nbVertices);
-		for (unsigned i = 0; i < nbVertices; ++i)
+		std::vector<Vertex> vertices;
+		std::vector<Face> faces;
+		std::list <std::array<unsigned, 3>> convex_hull;
+
+		vertices.reserve(nbVertices);
+		faces.reserve(nbFaces);
+
+#ifdef _DEBUG
+		olog(Finest) << "Inserting first face";
+#endif
+		Face first_face;
+		for (unsigned i = 0; i < 3; ++i)
 		{
 			Vertex vertex;
 			stream >> vertex.position.x;
 			stream >> vertex.position.y;
 			stream >> vertex.position.z;
-			vertex.incidentFace = 0;
 
 #ifdef _DEBUG
 			olog(Finest) << "Reading Vertex n°" << i << " with coordinates " << vertex.position;
 #endif
-			vertices[i] = std::move(vertex);
+
+			first_face.vertices[i] = i;
+
+			vertices.push_back(vertex);
 		}
 
-		// Loading the first face
-		std::vector<Face> faces(nbFaces);
+		Triangulation::AddFirstFace(vertices, faces, first_face, convex_hull);
 
-		return {};
+		for (unsigned i = 3; i < nbVertices; ++i)
+		{
+			Vertex vertex;
+			stream >> vertex.position.x;
+			stream >> vertex.position.y;
+			stream >> vertex.position.z;
+#ifdef _DEBUG
+			olog(Finest) << "Reading Vertex n°" << i << " with coordinates " << vertex.position;
+#endif
+
+			Triangulation::AddPointNaively(vertices, faces, vertex, convex_hull);
+		}
+
+
+		return std::move(Mesh(vertices, faces));
 	}
 }
 

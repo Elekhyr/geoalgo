@@ -21,6 +21,9 @@ namespace Ez
 		Mesh();
 		Mesh(const std::vector<Vertex>& vertices, const std::vector<Face>& faces);
 
+		const std::vector<Vertex>& _Vertices() const;
+		const std::vector<Face>& _Faces() const;
+
 	private:
 		std::vector<Vertex> mVertices;
 		std::vector<Face> mFaces;

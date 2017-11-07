@@ -241,13 +241,13 @@ namespace Math
 
 	// Operators
 	template <typename T>
-	Vec2<T> operator+ (Vec2<T> lhs, const Vec2<T>& rhs) {
-		return lhs += rhs;
+	Vec2<T> operator+ (const Vec2<T>& lhs, const Vec2<T>& rhs) {
+		return std::move(Vec2<T>(lhs.x + rhs.x, lhs.y + rhs.y));
 	}
 
 	template <typename T>
-	Vec2<T> operator- (Vec2<T> lhs, const Vec2<T>& rhs) {
-		return lhs -= rhs;
+	Vec2<T> operator- (const Vec2<T>& lhs, const Vec2<T>& rhs) {
+		return std::move(Vec2<T>(lhs.x - rhs.x, lhs.y - rhs.y));
 	}
 
 	template <typename T>

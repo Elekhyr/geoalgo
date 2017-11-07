@@ -157,6 +157,7 @@
     <ClInclude Include="Importers\OffImporter.hpp" />
     <ClInclude Include="Mesh\Vertex.hpp" />
     <ClInclude Include="Postprocessing\Postprocessing.hpp" />
+    <ClInclude Include="Postprocessing\Triangulation.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Importers\Importer.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Importers\OffImporter.cpp" />
     <ClCompile Include="Mesh\Vertex.cpp" />
     <ClCompile Include="Postprocessing\Postprocessing.cpp" />
+    <ClCompile Include="Postprocessing\Triangulation.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,4 +9,14 @@ namespace Ez
 		: mVertices(vertices), mFaces(faces)
 	{
 	}
+
+	const std::vector<Vertex>& Mesh::_Vertices() const
+	{
+		return mVertices;
+	}
+
+	const std::vector<Face>& Mesh::_Faces() const
+	{
+		return mFaces;
+	}
 }

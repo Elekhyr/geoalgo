@@ -20,7 +20,8 @@ namespace Ez
 	public:
 		Mesh ReadFromFile(const std::string& path, Postprocessing pp = Postprocessing::None) override;
 	private:
-		Mesh LoadWithNoPostProcessing(std::stringstream& stream, unsigned nbVertices, unsigned nbFaces) const;
+		static Mesh LoadWithNoPostProcessing(std::stringstream& stream, unsigned nbVertices, unsigned nbFaces);
+		static Mesh LoadWithNaiveTriangulation(std::stringstream& stream, const unsigned nbVertices, const unsigned nbFaces);
 	};
 }
 
