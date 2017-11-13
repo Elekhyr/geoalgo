@@ -15,6 +15,7 @@ namespace Ez
 	{
 		None,
 		Naive,
+		Lawson,
 		Delaunay
 	};
 }

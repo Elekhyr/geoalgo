@@ -22,6 +22,7 @@ namespace Ez
 	private:
 		static Mesh LoadWithNoPostProcessing(std::stringstream& stream, unsigned nbVertices, unsigned nbFaces);
 		static Mesh LoadWithNaiveTriangulation(std::stringstream& stream, const unsigned nbVertices, const unsigned nbFaces);
+		static Mesh LoadWithLawson(std::stringstream& stream, const unsigned nbVertices, const unsigned nbFaces);
 	};
 }
 

@@ -20,6 +20,10 @@ namespace Ez
 	public:
 		static void AddFirstFace(const std::vector<Vertex>& vertices, std::vector<Face>& faces, const Face& firstFace, std::list<std::array<unsigned, 3>>& convexHull);
 		static void AddPointNaively(std::vector<Vertex>& vertices, std::vector<Face>& faces, const Vertex& vertex, std::list<std::array<unsigned, 3>>& convexHull);
+		static bool isLocallyDelaunay(const std::vector<Vertex>& vector, const std::vector<Face>& faces, Face& face, unsigned index);
+		static void Flip(const std::vector<Vertex>& vector, std::vector<Face>& faces, std::array<unsigned, 3> edge);
+		static void Lawson(std::vector<Vertex>& vertices, std::vector<Face>& faces);
+			
 	private:
 
 		/**

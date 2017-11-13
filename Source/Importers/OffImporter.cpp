@@ -49,6 +49,9 @@ namespace Ez
 		case Postprocessing::Naive: 
 			result = LoadWithNaiveTriangulation(stream, nb_vertices, nb_faces); 
 			break;
+		case Postprocessing::Lawson:
+			result = LoadWithLawson(stream, nb_vertices, nb_faces);
+			break;
 		case Postprocessing::Delaunay: break;
 		default: result = LoadWithNoPostProcessing(stream, nb_vertices, nb_faces);
 		}
@@ -209,5 +212,56 @@ namespace Ez
 
 		return std::move(Mesh(vertices, faces));
 	}
+	
+	Mesh OffImporter::LoadWithLawson(std::stringstream& stream, const unsigned nbVertices, const unsigned nbFaces)
+	{
+		// Reading vertices
+		std::vector<Vertex> vertices;
+		std::vector<Face> faces;
+		std::list <std::array<unsigned, 3>> convex_hull;
+
+		vertices.reserve(nbVertices);
+		faces.reserve(nbFaces);
+
+#ifdef _DEBUG
+		olog(Finest) << "Inserting first face";
+#endif
+		Face first_face;
+		for (unsigned i = 0; i < 3; ++i)
+		{
+			Vertex vertex;
+			stream >> vertex.position.x;
+			stream >> vertex.position.y;
+			stream >> vertex.position.z;
+
+#ifdef _DEBUG
+			olog(Finest) << "Reading Vertex n°" << i << " with coordinates " << vertex.position;
+#endif
+
+			first_face.vertices[i] = i;
+
+			vertices.push_back(vertex);
+		}
+
+		Triangulation::AddFirstFace(vertices, faces, first_face, convex_hull);
+
+		for (unsigned i = 3; i < nbVertices; ++i)
+		{
+			Vertex vertex;
+			stream >> vertex.position.x;
+			stream >> vertex.position.y;
+			stream >> vertex.position.z;
+#ifdef _DEBUG
+			olog(Finest) << "Reading Vertex n°" << i << " with coordinates " << vertex.position;
+#endif
+
+			Triangulation::AddPointNaively(vertices, faces, vertex, convex_hull);
+		}
+
+		Triangulation::Lawson(vertices, faces);
+
+		return std::move(Mesh(vertices, faces));
+	}
+
 }
 
